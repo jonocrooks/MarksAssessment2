@@ -1,0 +1,101 @@
+package com.codewithjono;
+
+/*  Java ITC206 Assessment 2 Circles2D
+ *  By Jonathon Crooks
+ *  Semester 2
+ */
+
+public class Circle2D {
+
+    public static void main(String[] args) {
+
+        // Testing the data as provided in the assessment
+        // enter x, y and radius of circle as required
+        
+        Circle2D c1 = new Circle2D(2, 2, 2.5);
+        
+        // area print out of circle
+        
+        System.out.println("The area of the cirlce 1 is " + c1.getArea());
+        
+        // perimeter of circle
+        
+        System.out.println("The perimeter of the circle 1 is " +
+                c1.getPerimeter());
+        
+        // checking if specific point is in side the circle (x, y)
+        
+        System.out.println("c1 contains (3, 3): " +
+                c1.contains(3.0, 3.0));
+        
+        // checking if the circles overlaps
+        
+        System.out.println("c1 overlaps (3, 5, 0.3): " +
+                c1.overlaps(new Circle2D(3, 5, 0.3)));
+
+    }
+
+    private int x;
+
+    private int y;
+
+    private double x2, y2, radius;
+
+
+    public Circle2D() {
+        x = 0;
+        y = 0;
+        radius = 1;
+
+    }
+
+
+    public Circle2D(int xNewCircle, int yNewCircle, double rNewCircle) {
+        // constructor for cirlces x, y and also radius
+        this.y = yNewCircle;
+        this.x = xNewCircle;
+        this.radius = rNewCircle;
+
+    }
+    // get method for x y and radius
+    public double getXCircle(){
+        return x;
+    }
+
+    public double getYCircle(){
+        return y;
+    }
+
+    public double getRadius(){
+        return radius;
+    }
+    // method for getting area of circle
+    double getArea() {
+        return radius * radius * Math.PI;
+    }
+    // method of getting perimeter of circle
+    double getPerimeter() {
+        return 2 * radius * Math.PI;
+    }
+    // method to check if circle point is inside another circle
+    public boolean contains(double x2, double y2) {
+        if ((x-x2)*(x-x2)+(y-y2)*(y-y2) < radius * radius) // that returns true if the specified point (x, y) is inside this circle
+            return true;
+        else
+            return false;
+    }
+
+    // method to check if cirlces overlap each other
+    public boolean overlaps(Circle2D circle) {
+        double x2 = circle.getXCircle(), y2 = circle.getYCircle();  // getting circle x y co ordinates
+        // returns true if the specified circle overlaps with this circle.
+        double distance = Math.sqrt((x - x2) * (x - x2) + (y - y2) * (y - y2));
+        if (distance <= radius - circle.getRadius())
+            return true;
+        else
+            return false;
+    }
+
+
+
+}
