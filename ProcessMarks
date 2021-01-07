@@ -1,0 +1,195 @@
+package com.codewithjono;
+
+/*  Java ITC206 Assessment 2 ProcessMarks
+ *  By Jonathon Crooks
+ *  Semester 2
+ */
+
+
+import java.util.Arrays;
+
+public class ProcessMarks {
+
+    public static void main(String[] args) {
+
+        int[] marks = Marks.getMarks();
+        int[] gradingTally = gradeDistn(marks, grades);
+        Arrays.sort(marks);
+        
+        // Print out the marks 30 per line
+        
+        String string = "";
+        string += "All the grades in order are below: \n";
+        for (int k = 0; k < marks.length; k++)
+            if ((k + 1) % 30 == 0)                //30 per line
+                string += marks[k] + "\n";
+            else
+                string += marks[k] + " ";
+        System.out.println(string);
+
+        System.out.println("The min mark is " + min(marks));
+        System.out.println("The max mark is " + max(marks));
+        System.out.println("The range is " + range(marks));
+        System.out.println("The mean mark is " + mean(marks));
+        System.out.println("The median mark is " + median(marks));
+        System.out.println("The mode mark is " + mode(marks));
+
+        // Print out the tally of the grades here
+        
+        System.out.println("The number grade tally distribution is as follows: ");
+        System.out.println("A: " + gradingTally[0]);
+        System.out.println("B: " + gradingTally[1]);
+        System.out.println("C: " + gradingTally[2]);
+        System.out.println("D: " + gradingTally[3]);
+        System.out.println("E: " + gradingTally[4]);
+        System.out.println("F: " + gradingTally[5]);
+
+
+    }
+
+    // Finds out min number in array
+    
+    public static int min(int[] firstMarks) {
+        int min = firstMarks[0];
+        for (int i = 0; i < firstMarks.length; i++)
+            if (firstMarks[i] <= min)
+                min = firstMarks[i];
+
+        return min;
+
+    }
+    
+    // Finds out max number in array
+    
+    public static int max(int[] lastMarks) {
+        int max = lastMarks[0];
+        for (int i = 0; i < lastMarks.length; i++)
+            if (lastMarks[i] >= max)
+                max = lastMarks[i];
+
+        return max;
+    }
+    
+    // Finds out range of numbers in array
+    
+    public static int range(int[] rangeMark) {
+        int range;
+        range = (max(rangeMark) - min(rangeMark));
+        return range;
+    }
+    
+    // Finds the mean of the numbers in array
+    
+    public static int mean(int[] sumMarks) {
+        int sum = 0;
+        for (int i = 0; i < sumMarks.length; i++)
+            sum += sumMarks[i];
+        int mean = sum / sumMarks.length;
+        return mean;
+
+    }
+    // Finds the median of numbers in array
+    
+    public static int median(int[] medianMark) {
+        int[] medians = medianMark.clone();
+        Arrays.sort(medians);
+        int middle = medianMark.length / 2;
+        if (middle % 2 == 0) {
+            int left = medianMark[middle - 1];
+            int right = medianMark[middle];
+            return (left + right) / 2;
+        } else {
+            return medianMark[middle];
+        }
+    }
+    // Finds the mode of numbers in an array
+    
+    public static int mode(int[] modeMarks) {
+
+        int maxValue = 0, maxCount = 0;
+        for (int i = 0; i < modeMarks.length; ++i) {
+            int count = 0;
+            for (int j = 0; j < modeMarks.length; ++j) {
+                if (modeMarks[j] == modeMarks[i])
+                    ++count;
+            }
+            if (count > maxCount) {
+                maxCount = count;
+                maxValue = modeMarks[i];
+            }
+        }
+        return maxValue;
+    }
+    
+    // Grades method that can be changed if the boundaries change
+    
+    public static int[] grades =
+            {90, 75, 60, 50, 45};
+
+
+    public static int[] gradeDistn(final int[] marks, final int[] grades) {
+
+        if (marks == null || marks.length == 0) {
+            throw new IllegalArgumentException("The marks must be longer than 0");
+        }
+
+        char[] finalGrading = new char[marks.length];
+        int[] marking = marks.clone();
+
+        // Set up new array to count what mark each number falls into
+        
+        int[] gradingTally = new int[]{0, 0, 0, 0, 0, 0};
+
+        // Start counting marks in marks array
+        
+        for (int i = 0, j = marks.length; i < j; i++) {
+            int mark = marking[i];
+            char grade;
+
+
+            if (mark >= grades[0]) {
+                grade = 'A';
+                gradingTally[0]++;
+            } else if (mark >= grades[1]) {
+                grade = 'B';
+
+                gradingTally[1]++;
+            } else if (mark >= grades[2]) {
+                grade = 'C';
+                gradingTally[2]++;
+            } else if (mark >= grades[3]) {
+                grade = 'D';
+                gradingTally[3]++;
+            } else if (mark >= grades[4]) {
+                grade = 'E';
+                gradingTally[4]++;
+            } else {
+                grade = 'F';
+                gradingTally[5]++;
+
+            }
+
+            finalGrading[i] = grade;
+
+        }
+        String string = ""; // create a string with a space
+
+        Arrays.sort(finalGrading); // sort out final grading
+
+        for (int k = 0; k < marks.length; k++)
+            if ((k + 1) % 30 == 0) {             // 30 marks per line
+                string += finalGrading[k] + "\n";
+            } else {
+                string += finalGrading[k] + " ";
+            }
+        // Print out letter grades that are sorted
+        System.out.println("The following letter grade marks are below: ");
+        System.out.println(string);
+
+
+        return gradingTally;
+    }
+}
+
+
+
